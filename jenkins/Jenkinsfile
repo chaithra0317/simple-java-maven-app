@@ -6,20 +6,15 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                git branch: 'master', url: "
+                git branch: 'master', url: 'https://github.com/chaithra0317/simple-java-maven-app.git'
             }
         }
-        stage('Test') {
+        stage('build') {
             steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+                sh 'mvn clean install'
             }
         }
-        stage('Deliver') {
+        stage('sonar analysis') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
             }
